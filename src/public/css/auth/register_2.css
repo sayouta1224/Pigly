@@ -1,0 +1,35 @@
+.form__heading {
+    font-family: 'Hiragino Mincho Pro', serif;
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.register-form__heading {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.register-form__group {
+    margin-top: 30px;
+}
+
+.register-form__label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.register-form__input {
+    display: inline-block;
+    padding: 8px 12px;
+    width: 90%;
+    height: 43px;
+    border: 1px solid #E0DFDE;
+    text-align: left;
+}
+
+.register-unit {
+    margin-left: 10px;
+    vertical-align: bottom;
+}
