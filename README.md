@@ -50,7 +50,6 @@ php artisan db:seed
 - メールアドレス：test@example.com
 - パスワード　　：coachtech1106
 
-
 ## 使用技術(実行環境)
 - PHP 8.1
 - Laravel 8.83.8
