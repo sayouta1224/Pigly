@@ -16,7 +16,7 @@ class WeightLogFactory extends Factory
      */
     public function definition()
     {
-        $user = User::find(2);
+        $user = User::find(1);
         return [
             'user_id' => $user->id,
             'date' => $this->faker->date(),
