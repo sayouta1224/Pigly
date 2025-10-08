@@ -28,7 +28,7 @@
             </p>
         </div>
         <input class="login-form__btn btn" type="submit" value="ログイン">
-        <a href="/register" class="change">アカウント作成はこちら</a>
+        <a href="/register/step1" class="change">アカウント作成はこちら</a>
     </form>
 </div>
 @endsection

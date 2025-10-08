@@ -8,7 +8,7 @@
 <h2 class="form__heading">新規会員登録</h2>
 <h3 class="register-form__heading">STEP1 アカウント情報の登録</h3>
 <div class="register-form__inner">
-    <form class="register-form__form" action="/register" method="post">
+    <form class="register-form__form" action="/register/step1" method="post">
         @csrf
         <div class="register-form__group">
             <label class="register-form__label" for="name">お名前</label>

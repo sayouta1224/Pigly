@@ -24,20 +24,44 @@ class Step2Request extends FormRequest
     public function rules()
     {
         return [
-            'now_weight' => 'required | digits_between:0,4 | regex:1',
-            'target_weight' => 'required | digits_between:0,4 | regex:1',
+            'now_weight' => 'required | numeric',
+            'target_weight' => 'required | numeric',
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            foreach (['now_weight', 'target_weight'] as $field) {
+                $value = $this->input($field);
+
+                if ($value === null || $value === '') {
+                    continue;
+                }
+
+                if (!is_numeric($value)) {
+                    continue;
+                }
+
+                if (preg_match('/\.\d{2,}$/', $value)) {
+                    $validator->errors()->add($field, '小数点は1桁で入力してください');
+                    continue;
+                }
+
+                if (!preg_match('/^\d{1,2}(\.\d{1})?$/', $value)) {
+                $validator->errors()->add($field, '4桁までの数字で入力してください');
+                }
+            }
+        });
     }
 
     public function messages()
     {
         return[
             'now_weight.required' => '現在の体重を入力してください',
-            'now_weight.digits_between:0,4' => '4桁までの数字で入力してください',
-            'now_weight.regex:1' => '小数点は1桁で入力してください',
+            'now_weight.numeric' => '',
             'target_weight.required' => '目標の体重を入力してください',
-            'target_weight.digits_between:4' => '4桁までの数字で入力してください',
-            'target_weight.regex:1' => '小数点は1桁で入力してください',
+            'target_weight.numeric' => '',
         ];
     }
 }

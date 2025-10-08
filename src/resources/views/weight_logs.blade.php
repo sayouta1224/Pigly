@@ -8,27 +8,6 @@
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/weight_logs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}" />
-    <script>
-        // JavaScriptで日付フォーマットを変更
-        function formatDate() {
-            const dateInput = document.getElementById('date-input');
-            const display = document.getElementById('formatted-date');
-
-            // 入力された日付を取得
-            const selectedDate = new Date(dateInput.value);
-
-            if (!isNaN(selectedDate)) { // 有効な日付か確認
-                const year = selectedDate.getFullYear().toString().slice(4); // yyyy形式
-                const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // mm形式
-                const day = String(selectedDate.getDate()).padStart(2, '0'); // dd形式
-
-                // フォーマットして表示
-                display.textContent = `${year}年${month}月${day}日`;
-            } else {
-                display.textContent = '無効な日付です';
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -59,19 +38,24 @@
         <div class="bottom-contents">
             <div class="bottom-contents__inner">
                 <div class="search-items">
-                    <form class="search-form" action="/weight_logs/search" method="get">
+                    <form class="search-form" action="/weight_logs/search" method="post">
                         @csrf
                         <div class="search-form__date">
-                            <input class="from-date date" type="date" name="from" value="" onchange="formatDate()">
+                            <input class="from-date date" type="date" name="from" value="{{ old('from', $from ?? '') }}">
                             <span class="gap">～</span>
-                            <input class="until-date date" type="date" name="until" value="" onchange="formatDate()">
+                            <input class="until-date date" type="date" name="until" value="{{ old('until', $until ?? '') }}">
                         </div>
-                        @if(@isset($count)&& $count !="")
-                        <p class="search__result">{{ $from }}~{{ $until }}の検索結果{{ $count }}件</p>
+                        @if(!empty($isSearching))
+                        <p class="search__result">
+                            {{ \Carbon\Carbon::parse($from)->format('Y年m月d日') ?? '' }}
+                            ～
+                            {{ \Carbon\Carbon::parse($until)->format('Y年m月d日') ?? '' }}
+                            の検索結果　{{ $count }}件
+                        </p>
                         @endif
                         <div class="search-form__actions">
                             <input class="search-btn" type="submit" value="検索">
-                            @if(@isset($count)&& $count !="")
+                            @if(!empty($isSearching))
                             <input class="reset-btn" type="submit" value="リセット" name="reset">
                             @endif
                         </div>
@@ -89,7 +73,7 @@
                         <th class="log__label"></th>
                     </tr>
                     @foreach($weight_logs as $weight_log)
-                    <tr class="log__row">
+                    <tr class="log__row data-row">
                         <td class="log__data date-data">{{date('Y/m/d', strtotime($weight_log->date))}}</td>
                         <td class="log__data weight-data">{{$weight_log->weight}}kg</td>
                         <td class="log__data calories-data">{{$weight_log->calories}}cal</td>

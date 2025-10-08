@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeightLogController;
+use App\Http\Controllers\Auth\RegisterStepController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,11 @@ use App\Http\Controllers\WeightLogController;
 |
 */
 
-Route::get('register/step2', [WeightLogController::class, 'getStep2']);
+Route::get('/register/step1', [RegisterStepController::class, 'create'])->name('register.step1');
+Route::post('/register/step1', [RegisterStepController::class, 'store']);
 
-Route::post('register/step2', [WeightLogController::class, 'postStep2']);
+Route::get('/register/step2', [RegisterStepController::class, 'createStep2']);
+Route::post('/register/step2', [RegisterStepController::class, 'storeStep2']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/weight_logs', [WeightLogController::class, 'admin']);

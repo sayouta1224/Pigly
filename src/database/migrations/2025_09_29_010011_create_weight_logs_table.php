@@ -20,7 +20,7 @@ class CreateWeightLogsTable extends Migration
             $table->decimal('weight', $precision = 4, $scale = 1);
             $table->integer('calories');
             $table->time('exercise_time');
-            $table->text('exercise_content');
+            $table->text('exercise_content',120)->nullable();
             $table->timestamps();
         });
     }

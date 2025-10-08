@@ -36,5 +36,9 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        session(['pending_user_id' => $user->id]);
+
+        return $user;
     }
 }
